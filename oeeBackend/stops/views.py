@@ -4,35 +4,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializer import *
 
-# def stops_list(request):
-#     # fecth all the stop objects
-#     stops = Stop.objects.all()
-#     # send the stop object as a response
-#     # serialize the stops
-#     serializer = StopSerializer(stops, many=True)
-#     # return response using rest_framework's response
-#     return Response(serializer.data)
-# Create your views here.
-# @api_view(['get'])
-# def stops_list(request):
-#     # fecth all the stop objects
-#     stops = Stop.objects.all()
-#     # send the stop object as a response
-#     # serialize the stops
-#     serializer = StopSerializer(stops, many=True)
-#     # return response using rest_framework's responsedef stops_list(request):
-#     # fecth all the stop objects
-#     stops = Stop.objects.all()
-#     # send the stop object as a response
-#     # serialize the stops
-#     serializer = StopSerializer(stops, many=True)
-#     # return response using rest_framework's response
-#     return Response(serializer.data)
-#     return Response(serializer.data)
 @api_view(['GET', 'POST'])
 def stops_list(request):
     """
-    List all products, or create a new product.
+    List all stops, or create a new Stop.
     """
     if request.method == 'GET':
 
@@ -46,3 +21,27 @@ def stops_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'PUT', 'DELETE'])
+def stops_detail(request, pk):
+    """
+    Retrieve, update or delete anstop instance.
+    """
+    try:
+        stop = Stop.objects.get(pk=pk)
+    except Stop.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = StopSerializer(stop,context={'request': request})
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = StopSerializer(stop, data=request.data,context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        stop.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

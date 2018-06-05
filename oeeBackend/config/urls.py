@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path
 
 from stops.views import stops_list
+from stops.views import stops_detail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('stops_list/', stops_list)
+    path('stops/$', stops_list),
+    path('stops/?<pk>[0-9]+)$', stops_detail)
 ]
