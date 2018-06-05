@@ -1,3 +1,4 @@
+from rest_framework.reverse import reverse
 from django.db import models
 
 # Create your models here.
@@ -20,6 +21,12 @@ class Stop(models.Model):
     )      
     stop_created_at = models.DateTimeField(auto_now_add=True)
     stop_update_at = models.DateTimeField(auto_now=True)
+
+    # def get_absolute_url(self):
+    #     """
+    #     Returns the url to access a particular instance of Stop.
+    #     """
+    #     return reverse('stop-detail-view', args=[str(self.id)])
 
     def __str__(self):
         if self.stop_type == 'NPSTOP':

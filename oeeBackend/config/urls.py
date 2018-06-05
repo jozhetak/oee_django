@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from stops.views import fetch_stops
+from stops.views import stops_list
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('fetch_stops/', fetch_stops)
+    path('stops_list/', stops_list)
 ]
