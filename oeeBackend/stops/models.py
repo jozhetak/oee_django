@@ -1,4 +1,3 @@
-from rest_framework.reverse import reverse
 from django.db import models
 
 # Create your models here.

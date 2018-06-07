@@ -40,7 +40,17 @@ INSTALLED_APPS = [
     # Custom Apps
     'rest_framework',
     'corsheaders',
-    'stops'
+    'stops',
+    'bom',
+    'items',
+    'plants',
+    'shifts',
+    'workstations',
+    'quality_issues',
+    'job_orders',
+    'job_stops',
+    'job_quality_issues',
+    'oee_shift_data'
 ]
 
 MIDDLEWARE = [
