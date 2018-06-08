@@ -50,7 +50,14 @@ INSTALLED_APPS = [
     'job_orders',
     'job_stops',
     'job_quality_issues',
-    'oee_shift_data'
+    'oee_shift_data',
+    'employees',
+    'job_orders_employees',
+    'job_orders_partials',
+    'work_schedule',
+    'ws_employees',
+    'ws_shift',
+    'ws_shift_schedule'
 ]
 
 MIDDLEWARE = [
