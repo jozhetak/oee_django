@@ -19,10 +19,18 @@ class Bom(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
-    def bom_str(self, Workstation, Item):
-        return str('%d: %s' % (Item.item_name, Workstation.ws_name))
+    # def bom_str(self, *args):
+    #     return str('%s: %s' % (Item.item_name, Workstation.ws_name))
 
-    # def __str__(self):
-    #     return self.bom_str(self, Workstation, Item)
+    @property
+    def item_name(self):
+        return self.item_id.item_name
+
+    @property
+    def ws_name(self):
+        return self.workstation_id.ws_name
+
+    def __str__(self):
+        return 'La tasa de producciòn para el Item %s en la workstation %s ha sido añadida' % (self.item_name, self.ws_name)
 
     

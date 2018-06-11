@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'oee_shift_data',
     'employees',
     'job_orders_employees',
-    'job_orders_partials',
+    'job_orders_data',
     'work_schedule',
     'ws_employees',
     'ws_shift',
