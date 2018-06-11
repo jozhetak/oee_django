@@ -16,11 +16,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 
-from stops.views import stops_list
-from stops.views import stops_detail
+from stops.views import StopList, StopDetail
+from items.views import ItemList, ItemDetail
+from plants.views import PlantList, PlantDetail
+from workstations.views import WorkstationList, WorkstationDetail
+from bom.views import BomList, BomDetail
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
-    re_path(r'^stops/$', stops_list),
-    re_path(r'^stops/(?P<pk>[0-9]+)$', stops_detail),
+    re_path(r'^stops/$', StopList.as_view()),
+    re_path(r'^stops/(?P<pk>[0-9]+)$', StopDetail.as_view()),
+    re_path(r'^items/$', ItemList.as_view()),
+    re_path(r'^items/(?P<pk>[0-9]+)$', ItemDetail.as_view()),
+    re_path(r'^plants/$', PlantList.as_view()),
+    re_path(r'^plants/(?P<pk>[0-9]+)$', PlantDetail.as_view()),
+    re_path(r'^ws/$', WorkstationList.as_view()),
+    re_path(r'^ws/(?P<pk>[0-9]+)$', WorkstationDetail.as_view()),
+    re_path(r'^bom/$', BomList.as_view()),
+    re_path(r'^bom/(?P<pk>[0-9]+)$', BomDetail.as_view()),
 ]

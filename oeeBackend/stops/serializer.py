@@ -4,4 +4,4 @@ from .models import Stop
 class StopSerializer(ModelSerializer):
     class Meta:
         model = Stop
-        fields = '__all__'
+        fields = ('pk', 'stop_name', 'stop_type', 'stop_res_email')
