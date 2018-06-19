@@ -7,12 +7,12 @@ class Bom(models.Model):
     
     item_id = models.ForeignKey(
         Item,
-        related_name='item',
+        related_name='%(class)s_item',
         on_delete=models.CASCADE
     )
     workstation_id = models.ForeignKey(
         Workstation,
-        related_name='workstation',
+        related_name='%(class)s_workstation',
         on_delete=models.CASCADE
     )
     production_rate = models.FloatField(default=0)

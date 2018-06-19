@@ -1,11 +1,10 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField
-from .models import Bom
+from .models import JobOrder
 
-class BomSerializer(ModelSerializer):
+class JobOrderSerializer(ModelSerializer):
     item_id = StringRelatedField()
-    workstation_id = StringRelatedField()
     class Meta:
-        model = Bom
-        fields = ('pk', 'item_id', 'workstation_id', 'production_rate')
-        # lookup_field = 'ws_plant'
+        model = JobOrder
+        fields = ('pk', 'job_number', 'item_id', 'planned_qty', 'batch_number', 'due_date', 'job_status', 'start_datetime', 'close_datetime')
+
         

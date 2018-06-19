@@ -1,15 +1,15 @@
 from rest_framework import generics
 
-from .models import Bom
-from .serializer import BomSerializer
+from .models import JobOrder
+from .serializer import JobOrderSerializer
 
 # Create your views here.
 
-class BomList(generics.ListCreateAPIView):
-    queryset = Bom.objects.all()
-    serializer_class = BomSerializer
+class JobOrderList(generics.ListCreateAPIView):
+    queryset = JobOrder.objects.all()
+    serializer_class = JobOrderSerializer
 
-class BomDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Bom.objects.all()
-    serializer_class = BomSerializer
+class JobOrderDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = JobOrder.objects.all()
+    serializer_class = JobOrderSerializer
 

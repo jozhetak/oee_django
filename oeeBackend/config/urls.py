@@ -21,6 +21,9 @@ from items.views import ItemList, ItemDetail
 from plants.views import PlantList, PlantDetail
 from workstations.views import WorkstationList, WorkstationDetail
 from bom.views import BomList, BomDetail
+from job_orders.views import JobOrderList, JobOrderDetail
+from shifts.views import ShiftList, ShiftDetail
+from job_orders_data.views import JobOrderDataList, JobOrderDataDetail
 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
@@ -34,4 +37,10 @@ urlpatterns = [
     re_path(r'^ws/(?P<pk>[0-9]+)$', WorkstationDetail.as_view()),
     re_path(r'^bom/$', BomList.as_view()),
     re_path(r'^bom/(?P<pk>[0-9]+)$', BomDetail.as_view()),
+    re_path(r'^job_order/$', JobOrderList.as_view()),
+    re_path(r'^job_order/(?P<pk>[0-9]+)$', JobOrderDetail.as_view()),
+    re_path(r'^shift/$', ShiftList.as_view()),
+    re_path(r'^shift/(?P<pk>[0-9]+)$', ShiftDetail.as_view()),
+    re_path(r'^job_order_partial/$', JobOrderDataList.as_view()),
+    re_path(r'^job_order_partial/(?P<pk>[0-9]+)$', JobOrderDataDetail.as_view()),
 ]

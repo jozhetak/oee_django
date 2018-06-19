@@ -10,4 +10,4 @@ class Item(models.Model):
     update_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.item_name
+        return '%s: %s'%(self.item_code, self.item_name)

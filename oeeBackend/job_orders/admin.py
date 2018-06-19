@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Bom
+from .models import JobOrder
 
 # Register your models here.
 
-class BomAdmin(admin.ModelAdmin):
-    list_display = ('id', 'item_id', 'workstation_id', 'production_rate', 'created_at', 'update_at')
+class JobOrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'job_number', 'item_id','job_status', 'planned_qty', 'cmplt_qty', 'batch_number', 'due_date', 'created_at', 'update_at')
 
-admin.site.register(Bom, BomAdmin)
+admin.site.register(JobOrder, JobOrderAdmin)

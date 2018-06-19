@@ -21,7 +21,7 @@ class Workstation(models.Model):
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
-        related_name='plant'
+        related_name='%(class)s_plant'
     )
 
     def __str__(self):
