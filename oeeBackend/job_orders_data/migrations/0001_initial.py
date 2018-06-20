@@ -35,8 +35,8 @@ class Migration(migrations.Migration):
                 ('close_datetime', models.DateTimeField(blank=True, null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('update_at', models.DateTimeField(auto_now=True)),
-                ('job_number_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='joborderdata_job_order', to='job_orders.JobOrder')),
-                ('shift_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='joborderdata_shift', to='shifts.Shift')),
+                ('job_number_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='JobOrderData_job_order', to='job_orders.JobOrder')),
+                ('shift_id', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, related_name='JobOrderData_shift', to='shifts.Shift')),
             ],
         ),
     ]
