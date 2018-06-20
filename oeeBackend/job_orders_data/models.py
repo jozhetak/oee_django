@@ -32,7 +32,7 @@ class JobOrderData(models.Model):
 
     packaged_qty = models.IntegerField(null=True, blank=True)
     retention_samples_qty = models.IntegerField(null=True, blank=True)
-    reworked_qty = models.IntegerField(null=True, blank=True)
+    reworked_qty = models.IntegerField(null=True, blank=True, editable=False)
     q_issues_qty = models.IntegerField(null=True, blank=True)
     rejected_qty = models.IntegerField(null=True, blank=True)
     total_qty = models.IntegerField(null=True, blank=True)
@@ -71,6 +71,10 @@ class JobOrderData(models.Model):
     @property
     def batch_number(self):
         return self.job_number_id.batch_number
+    
+    @property
+    def get_reworked_qty(self):
+        return "Escrbir aqui la fucnion"
 
 
     def __str__(self):
