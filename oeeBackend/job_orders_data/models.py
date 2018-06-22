@@ -3,6 +3,7 @@ from job_orders.models import JobOrder
 from shifts.models import Shift
 
 
+
 # Create your models here.
 
 class JobOrderData(models.Model):
@@ -33,10 +34,10 @@ class JobOrderData(models.Model):
     packaged_qty = models.IntegerField(null=True, blank=True)
     retention_samples_qty = models.IntegerField(null=True, blank=True)
     reworked_qty = models.IntegerField(null=True, blank=True, editable=False)
-    q_issues_qty = models.IntegerField(null=True, blank=True)
-    rejected_qty = models.IntegerField(null=True, blank=True)
-    total_qty = models.IntegerField(null=True, blank=True)
-    first_pass_qty = models.IntegerField(null=True, blank=True)
+    q_issues_qty = models.IntegerField(null=True, blank=True, editable=False)
+    rejected_qty = models.IntegerField(null=True, blank=True, editable=False)
+    total_qty = models.IntegerField(null=True, blank=True, editable=False)
+    first_pass_qty = models.IntegerField(null=True, blank=True, editable=False)
 
     #Tiempos
     
@@ -74,7 +75,47 @@ class JobOrderData(models.Model):
     
     @property
     def get_reworked_qty(self):
-        return "Escrbir aqui la fucnion"
+        q_issues = self.jobqualityissue_q_issue.filter(reworked=True)
+        reworked_qty = 0
+        for q_issue in q_issues:
+            reworked_qty = reworked_qty + q_issue.q_issue_qty
+        return reworked_qty
+    
+    @property
+    def get_q_issues_qty(self):
+        q_issues = self.jobqualityissue_q_issue.filter()
+        q_issues_qty = 0
+        for q_issue in q_issues:
+            q_issues_qty = q_issues_qty + q_issue.q_issue_qty
+        return q_issues_qty
+    
+    @property
+    def get_rejected_qty(self):
+        return self.get_q_issues_qty - self.get_reworked_qty
+
+    @property
+    def get_total_qty(self):
+        return self.packaged_qty + self.retention_samples_qty + self.get_rejected_qty
+
+    @property
+    def get_first_pass_qty(self):
+        return self.get_total_qty - self.get_q_issues_qty
+    
+    # @property
+    # def get_planned_downtime(self):
+    #     stops = self.jobstop_job_order_data.filter(stop_id.stop_type='NPSTOP')
+    #     q_issues_qty = 0
+    #     for q_issue in q_issues:
+    #         q_issues_qty = q_issues_qty + q_issue.q_issue_qty
+    #     return q_issues_qty
+
+    def save(self, *args, **kwargs):
+        self.reworked_qty = self.get_reworked_qty
+        self.q_issues_qty = self.get_q_issues_qty
+        self.rejected_qty = self.get_rejected_qty
+        self.total_qty = self.get_total_qty
+        self.first_pass_qty = self.get_first_pass_qty
+        super(JobOrderData, self).save(*args, **kwargs)
 
 
     def __str__(self):

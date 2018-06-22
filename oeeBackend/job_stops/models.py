@@ -14,7 +14,7 @@ class JobStop(models.Model):
         on_delete=models.DO_NOTHING,
         blank=False,
         null=False,
-        related_name='%(class)s_q_issue'
+        related_name='%(class)s_job_order_data'
     )
     stop_id = models.ForeignKey(
         Stop,
