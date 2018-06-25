@@ -39,20 +39,20 @@ class JobOrderData(models.Model):
     total_qty = models.IntegerField(null=True, blank=True, editable=False)
     first_pass_qty = models.IntegerField(null=True, blank=True, editable=False)
 
+    # Hora inicio / Hora fín
+    start_datetime = models.DateTimeField(null=True, blank=True)
+    close_datetime = models.DateTimeField(null=True, blank=True)
+
     #Tiempos
     
-    job_process_time = models.FloatField(blank=True, null=True)
-    planned_downtime = models.FloatField(blank=True, null=True)
-    not_planned_downtime = models.FloatField(blank=True, null=True)
+    job_process_time = models.FloatField(blank=True, null=True, editable=False)
+    planned_downtime = models.FloatField(blank=True, null=True, editable=False)
+    not_planned_downtime = models.FloatField(blank=True, null=True, editable=False)
 
     #Comentarios
     
     job_performance_comments = models.TextField(blank=True, null=True)
     job_quality_comments = models.TextField(blank=True, null=True)
-
-    # Hora inicio / Hora fín
-    start_datetime = models.DateTimeField(null=True, blank=True)
-    close_datetime = models.DateTimeField(null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
@@ -101,20 +101,35 @@ class JobOrderData(models.Model):
     def get_first_pass_qty(self):
         return self.get_total_qty - self.get_q_issues_qty
     
-    # @property
-    # def get_planned_downtime(self):
-    #     stops = self.jobstop_job_order_data.filter(stop_id.stop_type='NPSTOP')
-    #     q_issues_qty = 0
-    #     for q_issue in q_issues:
-    #         q_issues_qty = q_issues_qty + q_issue.q_issue_qty
-    #     return q_issues_qty
+    @property
+    def get_planned_downtime(self):
+        stops = self.jobstop_job_order_data.filter(stop_type='PSTOP')
+        planned_downtime = 0
+        for stop in stops:
+            planned_downtime = planned_downtime + stop.stop_time
+        return planned_downtime
+    
+    @property
+    def get_not_planned_downtime(self):
+        stops = self.jobstop_job_order_data.filter(stop_type='NPSTOP')
+        not_planned_downtime = 0
+        for stop in stops:
+            not_planned_downtime = not_planned_downtime + stop.stop_time
+        return not_planned_downtime
 
+    @property
+    def get_job_process_time(self):
+        return (self.close_datetime - self.start_datetime).total_seconds() / 60
+        
     def save(self, *args, **kwargs):
         self.reworked_qty = self.get_reworked_qty
         self.q_issues_qty = self.get_q_issues_qty
         self.rejected_qty = self.get_rejected_qty
         self.total_qty = self.get_total_qty
         self.first_pass_qty = self.get_first_pass_qty
+        self.planned_downtime = self.get_planned_downtime
+        self.not_planned_downtime = self.get_not_planned_downtime
+        self.job_process_time = self.get_job_process_time
         super(JobOrderData, self).save(*args, **kwargs)
 
 

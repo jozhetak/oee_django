@@ -7,5 +7,5 @@ class JobStopSerializer(ModelSerializer):
     class Meta:
         model = JobStop
         fields = ('pk', 'job_order_data_id', 'stop_id', 'start_datetime', 'close_datetime',
-                  'stop_time', 'stop_description')
+                  'stop_time', 'stop_type', 'stop_description')
         

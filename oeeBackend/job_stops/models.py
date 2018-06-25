@@ -37,6 +37,10 @@ class JobStop(models.Model):
     
     stop_description = models.TextField(blank=True, null=True)
 
+    # Datos duplicados revisar otra opción
+
+    stop_type = stop_type = models.CharField(max_length=6,blank=True, null=True, editable=False)
+
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
@@ -47,9 +51,14 @@ class JobStop(models.Model):
     @property
     def get_stop_time(self):
         return (self.close_datetime - self.start_datetime).total_seconds() / 60
+
+    @property
+    def get_stop_type(self):
+        return self.stop_id.stop_type
     
     def save(self, *args, **kwargs):
         self.stop_time = self.get_stop_time
+        self.stop_type = self.get_stop_type
         super(JobStop, self).save(*args, **kwargs)
 
 
