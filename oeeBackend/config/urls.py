@@ -27,6 +27,7 @@ from job_orders_data.views import JobOrderDataList, JobOrderDataDetail
 from quality_issues.views import QualityIssueList, QualityIssueDetail
 from job_quality_issues.views import JobQualityIssueList, JobQualityIssueDetail
 from job_stops.views import JobStopList, JobStopDetail
+from job_orders_detail.views import JobOrderDetailList, JobOrderDetailDetail
 
 
 urlpatterns = [
@@ -53,4 +54,6 @@ urlpatterns = [
     re_path(r'^job_q_issue/(?P<pk>[0-9]+)$', JobQualityIssueDetail.as_view()),
     re_path(r'^job_stop/$', JobStopList.as_view()),
     re_path(r'^job_stop/(?P<pk>[0-9]+)$', JobStopDetail.as_view()),
+    re_path(r'^job_order_detail/$', JobOrderDetailList.as_view()),
+    re_path(r'^job_order_detail/(?P<pk>[0-9]+)$', JobOrderDetailDetail.as_view()),
 ]

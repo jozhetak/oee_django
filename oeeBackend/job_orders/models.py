@@ -1,5 +1,6 @@
 from django.db import models
 from items.models import Item
+from bom.models import Bom
 
 
 # Create your models here.
@@ -15,7 +16,7 @@ class JobOrder(models.Model):
     )
 
     job_number = models.CharField(max_length=10)
-    item_id = models.ForeignKey(
+    item = models.ForeignKey(
         Item,
         related_name='%(class)s_item',
         on_delete=models.DO_NOTHING
@@ -35,12 +36,36 @@ class JobOrder(models.Model):
     batch_number = models.CharField(max_length=10)
 
     @property
+    def ws(self):
+        item_id = self.item.id
+        boms = Bom.objects.filter(item_id = item_id)
+        for bom in boms:
+            return str(bom.workstation_id)
+
+    
+    @property
     def item_name(self):
-        return self.item_id.item_name
+        return self.item.item_name
 
     @property
     def item_code(self):
-        return self.item_id.item_code
+        return self.item.item_code
+
+    # @property
+    # def get_bom_data(self):
+    #     boms = Bom.objects.filter(item_id=self.item)
+    #     if boms:
+    #         for bom in boms:
+    #             ws_id = workstation
+    #     return ws_id
+
+    # @property
+    # def get_(self):
+    #     q_issues = self.jobqualityissue_q_issue.filter(reworked=True)
+    #     reworked_qty = 0
+    #     for q_issue in q_issues:
+    #         reworked_qty = reworked_qty + q_issue.q_issue_qty
+    #     return reworked_qty
 
 
     def __str__(self):

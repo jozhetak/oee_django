@@ -1,6 +1,8 @@
 from django.db import models
 from job_orders.models import JobOrder
 from shifts.models import Shift
+from workstations.models import Workstation
+from bom.models import Bom
 
 
 
@@ -48,6 +50,17 @@ class JobOrderData(models.Model):
     job_process_time = models.FloatField(blank=True, null=True, editable=False)
     planned_downtime = models.FloatField(blank=True, null=True, editable=False)
     not_planned_downtime = models.FloatField(blank=True, null=True, editable=False)
+
+    # Otros campos
+
+    workstation = models.ForeignKey(
+        Workstation,
+        related_name='%(class)s_workstation',
+        editable=False,
+        blank=True,
+        null=True,
+        on_delete=models.DO_NOTHING
+    )
 
     #Comentarios
     
@@ -120,6 +133,13 @@ class JobOrderData(models.Model):
     @property
     def get_job_process_time(self):
         return (self.close_datetime - self.start_datetime).total_seconds() / 60
+    
+    @property
+    def get_workstation(self):
+        workstations = Workstation.objects.filter(id=1)
+        for workstation in workstations:
+            ws_id = workstation
+        return ws_id
         
     def save(self, *args, **kwargs):
         self.reworked_qty = self.get_reworked_qty
@@ -130,6 +150,7 @@ class JobOrderData(models.Model):
         self.planned_downtime = self.get_planned_downtime
         self.not_planned_downtime = self.get_not_planned_downtime
         self.job_process_time = self.get_job_process_time
+        self.workstation = self.get_workstation
         super(JobOrderData, self).save(*args, **kwargs)
 
 
