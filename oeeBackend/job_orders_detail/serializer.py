@@ -7,6 +7,6 @@ class JobOrderDetailSerializer(ModelSerializer):
     workstation = StringRelatedField()
     class Meta:
         model = JobOrderDetail
-        fields = ('pk', 'job_order', 'job_detail_status', 'item', 'workstation', 'production_rate',)
+        fields = ('pk', 'job_order_id', 'item', 'workstation', 'production_rate',)
 
         
