@@ -15,12 +15,12 @@ class JobOrderData(models.Model):
         ('Closed', 'Cerrada'),
     )
 
-    job_number_id = models.ForeignKey(
+    job_order = models.ForeignKey(
         JobOrder,
         related_name='%(class)s_job_order',
         on_delete=models.DO_NOTHING
     )
-    shift_id = models.ForeignKey(
+    shift = models.ForeignKey(
         Shift,
         related_name='%(class)s_shift',
         on_delete=models.DO_NOTHING
@@ -56,7 +56,6 @@ class JobOrderData(models.Model):
     workstation = models.ForeignKey(
         Workstation,
         related_name='%(class)s_workstation',
-        editable=False,
         blank=True,
         null=True,
         on_delete=models.DO_NOTHING
@@ -134,12 +133,12 @@ class JobOrderData(models.Model):
     def get_job_process_time(self):
         return (self.close_datetime - self.start_datetime).total_seconds() / 60
     
-    @property
-    def get_workstation(self):
-        workstations = Workstation.objects.filter(id=1)
-        for workstation in workstations:
-            ws_id = workstation
-        return ws_id
+    # @property
+    # def get_workstation(self):
+    #     workstations = Workstation.objects.filter(id=1)
+    #     for workstation in workstations:
+    #         ws_id = workstation
+    #     return ws_id
         
     def save(self, *args, **kwargs):
         self.reworked_qty = self.get_reworked_qty
@@ -150,7 +149,7 @@ class JobOrderData(models.Model):
         self.planned_downtime = self.get_planned_downtime
         self.not_planned_downtime = self.get_not_planned_downtime
         self.job_process_time = self.get_job_process_time
-        self.workstation = self.get_workstation
+        # self.workstation = self.get_workstation
         super(JobOrderData, self).save(*args, **kwargs)
 
 

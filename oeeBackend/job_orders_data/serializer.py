@@ -6,7 +6,7 @@ class JobOrderDataSerializer(ModelSerializer):
     shift_id = StringRelatedField()
     class Meta:
         model = JobOrderData
-        fields = ('pk', 'job_number_id', 'shift_id', 'job_partial_status', 'packaged_qty',
+        fields = ('pk', 'job_order', 'shift', 'job_partial_status', 'packaged_qty',
                   'retention_samples_qty', 'reworked_qty', 'q_issues_qty', 'rejected_qty',
                   'first_pass_qty', 'total_qty', 'job_process_time', 'planned_downtime',
                   'not_planned_downtime', 'workstation','job_performance_comments', 'job_quality_comments',

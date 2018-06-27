@@ -9,7 +9,7 @@ from bom.models import Bom
 
 class JobOrderDetail(models.Model):
 
-    job_order_id = models.IntegerField(blank=True, null=True, editable=False)
+    job_order = models.IntegerField(blank=True, null=True, editable=False)
 
     # Otros campos
 
